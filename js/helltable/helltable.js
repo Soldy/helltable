@@ -1,6 +1,8 @@
 'use strict';
-
-const hellTableClass = function(){
+/**
+ * @function onclick
+ */
+const hellTableClass = function(onclick_){
 
     /**
      *
@@ -60,6 +62,7 @@ const hellTableClass = function(){
     let _headers = {};
     let _rendered = false;
     let _element;
+    let _onclick = onclick_;
     let _colums = [];
     const _create = function(tag){
         return document.createElement(tag);
@@ -71,6 +74,10 @@ const hellTableClass = function(){
     }
     const _renderLine = function(line_){
          const line = _create('tr');
+         line.setAttribute(
+           "riute",
+           line_[_colums[0]]
+         );
          for(let col of _colums){
              if(typeof line_[col] === 'undefined')
                  line_[col] = '';
@@ -78,6 +85,10 @@ const hellTableClass = function(){
                  _renderCel(line_[col])
              );
          }
+         line.addEventListener(
+           "click",
+           _onclick
+         )
          return line;
     };
     const _renderHeadCel = function(title){
@@ -118,4 +129,7 @@ const hellTableClass = function(){
         _rendered = true;
         return _element;
     };
+    if (typeof _onclick === 'undefined')
+      _onclick = function(id_){};
+
 };
